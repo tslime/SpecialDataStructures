@@ -1,9 +1,14 @@
 #ifndef HLINKEDLIST_H
 #define HLINKEDLIST_H
 
-class HLINKEDLIST_H{
+#include "HNode.h"
 
-    HLinkedlist(){}
+template <typename T1,typename T2>
+class HLinkedlist{
+
+    HNode<T1,T2> entry;
+
+    HLinkedlist(): entry(nullptr){}
 };
 
 

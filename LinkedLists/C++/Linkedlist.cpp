@@ -48,7 +48,7 @@ class Linkedlist{
                     Node<T> *aux = l.head;
                     Node<T> *prev = nullptr;
 
-                    while(aux != nullptr && aux.data != d){
+                    while(aux != nullptr && aux->data != d){
                         prev = aux;
                         aux = aux->next;
                     }
@@ -61,9 +61,9 @@ class Linkedlist{
                 }
             }
 
-            Node<T>* searchLinkedlist(Linkedlist& l,T d){
+            Node<T>* searchLinkedlist(const Linkedlist& l,T d){
                 
-                Node<T> *res;
+                Node<T> *res = nullptr;
                 
                 if(l.head == nullptr)
                 cout << "The list is empty \n";
@@ -78,6 +78,9 @@ class Linkedlist{
                 
                 return res;
             }
+
+
+            
 };
 
     int main(){
@@ -98,6 +101,22 @@ class Linkedlist{
 
         l.printLinkedlist(l);
         cout << "\n";
+
+      
+
+        while(true){
+              cout << "Give me the element you are looking for \n";
+              int e;
+              cin >> e;
+            
+            Node<int> *r = l.searchLinkedlist(l,e);
+
+            if( r != nullptr)
+            cout << r->data << " \n";
+            else cout << "element does not exist";
+
+            cout << "\n";
+        }
 
         exit(0);
     }
