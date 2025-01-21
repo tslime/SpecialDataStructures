@@ -4,11 +4,13 @@
 template <typename T1,typename T2>
 class HNode{
 
-    T1 key;
-    T2 value;
-    HNode<T1,T2> *next;
+    public:
+           
+           T1 key;
+           T2 value;
+           HNode<T1,T2> *next;
 
-    HNode(T1 key,T2 value): key(key), value(value), next(nullptr){}
+           HNode(T1 key,T2 value): key(key), value(value), next(nullptr){}
 };
 
 

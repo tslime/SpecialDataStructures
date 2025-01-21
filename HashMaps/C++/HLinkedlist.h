@@ -6,9 +6,11 @@
 template <typename T1,typename T2>
 class HLinkedlist{
 
-    HNode<T1,T2> entry;
+    public:
 
-    HLinkedlist(): entry(nullptr){}
+          HNode<T1,T2> *entry;
+
+          HLinkedlist(): entry(nullptr){}
 };
 
 
