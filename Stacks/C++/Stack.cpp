@@ -43,6 +43,18 @@ class Stack{
                 }
               }
 
+              Node<T>* pop(Stack<T>& s){
+                Node<T> *r = new Node<T>(s.top->data);
+
+                s.top = s.top->next;
+
+                return r;
+              }
+
+              Node<T> *peek(Stack<T>& s){
+                return s.top;
+              }
+
 };
 
 
@@ -66,6 +78,12 @@ int main(){
     cout << "\n";
 
     s.printS(s);
+    cout << "\n";
+
+    Node<int> *res = s.peek(s);
+    cout << "your top element is " << res->data << "\n";
+    cout << "\n";
+
 
     exit(0);
 }

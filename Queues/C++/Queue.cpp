@@ -43,6 +43,18 @@ class Queue{
             }
            }
 
+           Node<T> *peek(Queue<T>& q){
+            return q.first;
+           }
+
+           Node<T> *dequeue(Queue<T>& q){
+            Node<T> *r = new Node(q.first->data);
+
+            q.first = q.first->next;
+
+            return r;
+           }
+
 };
 
 
@@ -68,6 +80,20 @@ int main(){
 
     cout << "\n";
     q.printQ(q);
+    cout << "\n";
+
+    Node<int> *r = q.dequeue(q);
+    cout << "your dequeued element is: "<< r->data << "\n";
+
+
+    cout<< "\n";
+    q.printQ(q);
+    cout << "\n";
+    
+    r = q.peek(q);
+    cout << "your first element is: " << r->data << "\n";
+
+
 
     exit(0);
 }
