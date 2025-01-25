@@ -106,6 +106,43 @@ class Linkedlist{
             Linkedlist<T> merge(Linkedlist<T>& l1, Linkedlist<T>& l2){
                 Linkedlist<T> res;
 
+                Node<T> *aux1 = l1.head;
+                Node<T> *aux2 = l2.head;
+                Node<T> *temp;
+
+                while(aux1 != nullptr && aux2 != nullptr){
+                    if(aux1->data <= aux2->data){
+                        if(res.head == nullptr){       
+                        res.head = aux1;
+                        temp = res.head;
+                        aux1 = aux1->next;
+                    }else{
+                        temp->next = aux1;
+                        aux1 = aux1->next;
+                        temp = temp->next;
+                    }
+
+                }else{
+                      if(res.head == nullptr){
+                        res.head = aux2;
+                        temp = res.head;
+                        aux2 = aux2->next;
+                      }else{
+                            temp->next = aux2;
+                            aux2 = aux2->next;
+                            temp = temp->next;
+                      }
+                    
+                    }
+
+               }
+              
+               if(aux1 != nullptr)
+               temp->next = aux1;
+
+               if(aux2 != nullptr)
+               temp->next = aux2;
+
                 return res;
             }
 
@@ -114,27 +151,43 @@ class Linkedlist{
 
     int main(){
 
-        int N;
-        Linkedlist<int> l;
+        int N1;
+        int N2;
+        Linkedlist<int> l1;
+        Linkedlist<int> l2;
         
-        cout << "Introduce the number of elements you would like to insert:\n";
-        cin >> N;
+        cout << "Introduce the number of elements you would like to insert for the first list:\n";
+        cin >> N1;
+        cout << "Introduce the number of elements you would like to insert for the second list:\n";
+        cin >> N2;
         
         int d;
-        for(int i=0;i<N;i++){
-            cout << "Give me data number "<< i+1 << " \n";
+        for(int i=0;i<N1;i++){
+            cout << "for the first list Give me data number "<< i+1 << " \n";
             cin >> d;
-            l.insertLinkedlist(l,d);
+            l1.insertLinkedlist(l1,d);
         }
         cout << "\n";
 
-        l.printLinkedlist(l);
+        for(int x=0;x<N2;x++){
+            cout << "for the second list Give me data number "<< x+1 << " \n";
+            cin >> d;
+            l2.insertLinkedlist(l2,d);
+        }
         cout << "\n";
 
-        //Linkedlist<int> r = l.reverseLinkedlist(l);
-        l.reverseLinkedlist(l);
-        cout << "your reversed list is: \n";
-        l.printLinkedlist(l);
+
+
+        l1.printLinkedlist(l1);
+        cout << "\n";
+
+        l2.printLinkedlist(l2);
+        cout << "\n";
+        cout << "\n";
+
+        Linkedlist<int> r = l1.merge(l1,l2);
+
+        r.printLinkedlist(r);
 
 
         exit(0);
