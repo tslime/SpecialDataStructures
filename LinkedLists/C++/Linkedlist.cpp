@@ -79,6 +79,35 @@ class Linkedlist{
                 return res;
             }
 
+            void reverseLinkedlist(Linkedlist<T>& l){
+
+
+                if(l.head != nullptr && l.head->next != nullptr){
+                    Node<T> *prev = nullptr;
+                    Node<T> *curr = l.head;
+                    Node<T> *succ = l.head->next;
+
+                    while(succ != nullptr){
+                        curr->next = prev;
+                        prev = curr;
+
+                        curr = succ;
+                        succ = succ->next;
+                    }
+                    curr->next = prev;
+                    l.head = curr;
+
+                 
+                } 
+
+            }
+
+
+            Linkedlist<T> merge(Linkedlist<T>& l1, Linkedlist<T>& l2){
+                Linkedlist<T> res;
+
+                return res;
+            }
 
             
 };
@@ -102,21 +131,11 @@ class Linkedlist{
         l.printLinkedlist(l);
         cout << "\n";
 
-      
+        //Linkedlist<int> r = l.reverseLinkedlist(l);
+        l.reverseLinkedlist(l);
+        cout << "your reversed list is: \n";
+        l.printLinkedlist(l);
 
-        while(true){
-              cout << "Give me the element you are looking for \n";
-              int e;
-              cin >> e;
-            
-            Node<int> *r = l.searchLinkedlist(l,e);
-
-            if( r != nullptr)
-            cout << r->data << " \n";
-            else cout << "element does not exist";
-
-            cout << "\n";
-        }
 
         exit(0);
     }

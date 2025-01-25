@@ -37,6 +37,18 @@ class BSTree{
                         else insertBSTree(&((*r)->right),d);
                    }
                 }
+                
+                BNode<T>* searchBSTree(BNode<T> *r,T d){
+                    
+                    if(r == nullptr || r->data == d)
+                    return r;
+                    else{
+                         if(d <= r->data )
+                         return searchBSTree(r->left,d);
+                         else return searchBSTree(r->right,d);
+                    }
+                    
+                }
 
                 void deleteBSTree(BNode<T> **r,T d){
                     
@@ -68,6 +80,21 @@ int main(){
 
         t.printBSTree(t.root);
         cout << "\n";
+
+        int e;
+        while(true){
+          cout << "What is the element you are looking for \n";
+          cin >> e;
+        
+          BNode<int> *res = t.searchBSTree(t.root,e);
+          cout << "\n";
+
+          if(res == nullptr)
+          cout << "This element does not exist \n";
+          else cout << "element found and it is: "<< res->data;
+          
+          cout << "\n";
+        }
 
 exit(0);
 
