@@ -15,6 +15,7 @@ void insertMinheap(Minheap *mh,int d);
 void bubbleUp(Minheap *mh,int pos);
 int deleteMinheap(Minheap *mh);
 void bubbleDown(Minheap *mh,int n_entries);
+void minheapSort(Minheap *mh);
 
 void printMinheap(Minheap *mh){
     if(mh->entries == 0)
