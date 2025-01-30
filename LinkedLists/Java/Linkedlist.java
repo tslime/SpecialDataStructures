@@ -273,17 +273,17 @@ public static<T extends Comparable<T>> Linkedlist<T> mergeSortList(Node<T> ini, 
             i++;
         }*/
 
-        /*
-        Node<Integer> t = splitList(mylist1,mylist1.head,null);
+        
+        Node<Integer> t = splitList(mylist1.head,null);
         System.out.println("mid "+t.data);
-        */
+        
      
-        System.out.println("Your reversed list is:");
-        Linkedlist<Integer> result = reverseList(mylist1);
+       // System.out.println("Your reversed list is:");
+        //Linkedlist<Integer> result = reverseList(mylist1);
 
         //Linkedlist<Integer> result = mergeSortList(mylist1.head,null); /* 4 2 0 1 5 0 19 11 1 9 [0,1,2,0,0,2,2,1]*/
 
-        printList(result);
+        //printList(result);
         System.out.println("");
         
 
