@@ -36,7 +36,22 @@ class Minheap{
         }
 
         public static void bubbleUp(Minheap mh,int pos){
+            int parent = 0;
+            boolean b = true;
 
+            while(b){
+                parent = (pos-1)/2;
+                if(pos < 0)
+                b = false;
+                else{
+                    if(mh.slots[parent] > mh.slots[pos]){
+                        int temp = mh.slots[parent];
+                        mh.slots[parent] = mh.slots[pos];
+                        mh.slots[pos] = temp;
+                        pos = parent;
+                    }else b = false;
+                }
+            }
         }
 
         public static void deleteMinheap(Minheap mh){
@@ -49,16 +64,74 @@ class Minheap{
                 mh.slots[0] = mh.slots[mh.num_entries-1];
                 mh.slots[mh.num_entries-1] = Integer.MAX_VALUE;
                 mh.num_entries--;
-                bubbleDown(mh);
+                bubbleDown(mh,mh.num_entries-1);
             }
         }
 
-        public static void bubbleDown(Minheap mh){
+        public static void bubbleDown(Minheap mh,int pos){
+            int l_c = 0;
+            int r_c = 0;
+            int parent = 0;
+            boolean b = true;
 
+            while(b){
+                l_c = 2*parent + 1;
+                r_c = 2*parent + 2;
+
+                if(l_c >= pos && r_c >= pos)
+                b = false;
+                else{
+                    if(r_c < pos){
+
+                        if(mh.slots[r_c] >= mh.slots[l_c]){
+
+                            if(mh.slots[parent] > mh.slots[l_c]){
+                                int temp = mh.slots[parent];
+                                mh.slots[parent] = mh.slots[l_c];
+                                mh.slots[l_c] = temp;
+                                parent = l_c;
+                            }else b = false;
+
+                        }else{
+
+                             if(mh.slots[parent] > mh.slots[r_c]){
+                                int temp = mh.slots[parent];
+                                mh.slots[parent] = mh.slots[r_c];
+                                mh.slots[r_c] = temp;
+                                parent = r_c;
+                            }else b = false;
+
+                        }
+
+                    }else{
+
+                         if(mh.slots[parent] > mh.slots[l_c]){
+                                int temp = mh.slots[parent];
+                                mh.slots[parent] = mh.slots[l_c];
+                                mh.slots[l_c] = temp;
+                                parent = l_c;
+                            }else b = false;
+
+                    }
+                }
+            }
         }
 
         public static void minheapSort(Minheap mh){
+            if(mh.num_entries > 1){
+                int l = mh.num_entries-1;
+                boolean b = false;
 
+                while(!b){
+                    int temp = mh.slots[0];
+                    mh.slots[0] = mh.slots[l];
+                    mh.slots[l] = temp;
+                    l--;
+                    if(l > 0)
+                    bubbleDown(mh,l);
+                    else b = true;
+                }
+            }
         }
 
         public static void main(String args[]){

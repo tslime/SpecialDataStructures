@@ -1,4 +1,3 @@
-"""from __future__ import annotations"""
 import os
 import sys
 
@@ -29,7 +28,21 @@ class Minheap:
             self.bubbleUp(self.num_entries-1)
     
     def bubbleUp(self,pos: int):
-        return None
+        parent = 0
+        b = True
+
+        while b:
+            parent  = (pos-1)//2
+            if pos-1 < 0:
+                b = False
+            else:
+                if self.slots[parent] > self.slots[pos]:
+                    temp = self.slots[parent]
+                    self.slots[parent] = self.slots[pos]
+                    self.slots[pos] = temp
+                    pos = parent
+                else:
+                    b = False
 
     def deleteMinheap(self):
         r = None
@@ -40,13 +53,68 @@ class Minheap:
             self.slots[0] = self.slots[self.num_entries-1]
             self.slots[self.num_entries] = sys.maxsize
             self.num_entries-=1
-            self.bubbleDown()
+            self.bubbleDown(mh.num_entries-1)
+
+
     
-    def bubbleDown(self):
-        return None
+    def bubbleDown(self,pos: int):
+        l_c = 0
+        r_c = 0
+        parent = 0
+        b = True
+
+        while b:
+            l_c = 2*parent + 1
+            r_c = 2*parent + 2
+
+            if l_c >= pos and r_c >= pos:
+                b = False
+            else:
+                if r_c < pos:
+                    if self.slots[r_c] >= self.slots[l_c]:
+                        if self.slots[parent] > self.slots[l_c]:
+                            temp = self.slots[parent]
+                            self.slots[parent] = self.slots[l_c]
+                            self.slots[l_c] = temp
+                            parent = l_c
+                        else:
+                            b = False
+                    else:
+                        if self.slots[parent] > self.slots[r_c]:
+                            temp = self.slots[parent]
+                            self.slots[parent] = self.slots[r_c]
+                            self.slots[r_c] = temp
+                            parent = r_c
+                        else:
+                            b = False
+                 
+                else:
+                    if self.slots[parent] > self.slots[l_c]:
+                        temp = self.slots[parent]
+                        self.slots[parent] = self.slots[l_c]
+                        self.slots[l_c] = temp
+                        parent = l_c
+                    else:
+                        b = False
+
+
+
+
     
     def minheapSort(self):
-        return None
+        if(self.num_entries > 1):
+            l = self.num_entries -1
+            b = False
+
+            while not(b):
+                temp = self.slots[0]
+                self.slots[0] = self.slots[l]
+                self.slots[l] = temp
+                l-=1
+                if l > 0:
+                    self.bubbleDown(l)
+                else:
+                    b = True
 
 
 
