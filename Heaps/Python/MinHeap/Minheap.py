@@ -14,8 +14,8 @@ class Minheap:
         if self.num_entries == 0:
             print("The heap is empty \n")
         else:
-            for i in range(self.size):
-                print(self.slots[i]," ")
+            for i in range(self.num_entries):
+                print(self.slots[i],end=" ")
             
             print("")    
 
@@ -49,11 +49,11 @@ class Minheap:
         if self.num_entries == 0:
             print("The heap is empty \n")
         else:
-            r = self.num_entries[0]
+            r = self.slots[0]
             self.slots[0] = self.slots[self.num_entries-1]
-            self.slots[self.num_entries] = sys.maxsize
+            self.slots[self.num_entries-1] = sys.maxsize
             self.num_entries-=1
-            self.bubbleDown(mh.num_entries-1)
+            self.bubbleDown(self.num_entries-1)
 
 
     
@@ -121,4 +121,37 @@ class Minheap:
 
 """Testing"""
 
-print("test \n")
+print("Give me the size of your heap \n")
+N = int(input())
+h = Minheap(N)
+print()
+
+print("Give me the number of entries you would like to insert \n")
+e = int(input())
+i = 0
+print("Give me your entries \n")
+while i < e:
+    d = int(input())
+    h.insertMinheap(d)
+    i+=1
+    print()
+
+print("Your heap is \n")
+h.printMinheap()
+print()
+
+print("Your heap before deletion once \n")
+h.deleteMinheap()
+h.printMinheap()
+
+print()
+print("Your heap before deleting twice \n")
+h.deleteMinheap()
+h.printMinheap()
+
+print()
+print("Your heap after sorting \n")
+h.minheapSort()
+h.printMinheap()
+
+print()

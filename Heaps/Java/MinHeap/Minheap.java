@@ -137,7 +137,38 @@ class Minheap{
         public static void main(String args[]){
 
             Scanner sc = new Scanner(System.in);
+            int N;
+            System.out.println("Give me the size of your heap");
+            N = sc.nextInt();
+            Minheap h = new Minheap(N);
 
-            System.out.println("test");
+            System.out.println("Give me the number of entries you would like to insert:");
+            int entries = sc.nextInt();
+            System.out.println("Give me your entries:");
+            int i = 0;
+            int e;
+            while(i < entries){
+                e = sc.nextInt();
+                insertMinheap(h,e);
+                System.out.println("");
+                i++;
+            }
+
+            System.out.println("Your hear is:");
+            printMinheap(h);
+            System.out.println("");
+            System.out.println("Your heap after the first deletion is:");
+            deleteMinheap(h);
+            printMinheap(h);
+            System.out.println("");
+            System.out.println("Your heap after the second deletion is:");
+            deleteMinheap(h);
+            printMinheap(h);
+            System.out.println("");
+
+            System.out.println("Your sorted heap is");
+            minheapSort(h);
+            printMinheap(h);
+
         }
 }
