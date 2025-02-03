@@ -183,14 +183,7 @@ void main(){
     printf("Your heap is: \n");
     printMinheap(h);
 
-    printf("\n");
-    printf("Your heap after sorting \n");
 
-    minheapSort(h);
-    printMinheap(h);
-
-
-    /*
     printf("\n");
     deleteMinheap(h);
     printf("Your new heap is :\n");
@@ -201,6 +194,18 @@ void main(){
     printf("Your new heap two is :\n");
     printMinheap(h);
 
- */
+
+    
+    printf("\n");
+    printf("Your heap after sorting \n");
+
+    minheapSort(h);
+    printMinheap(h);
+
+
+    
+
+
+ 
 
 }

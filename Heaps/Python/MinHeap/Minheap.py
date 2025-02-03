@@ -67,10 +67,10 @@ class Minheap:
             l_c = 2*parent + 1
             r_c = 2*parent + 2
 
-            if l_c >= pos and r_c >= pos:
+            if l_c > pos and r_c > pos:
                 b = False
             else:
-                if r_c < pos:
+                if r_c <= pos:
                     if self.slots[r_c] >= self.slots[l_c]:
                         if self.slots[parent] > self.slots[l_c]:
                             temp = self.slots[parent]
