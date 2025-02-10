@@ -29,6 +29,17 @@ class Minheap{
                     }
                 }
 
+                void Heapify(Minheap& mh){
+                    if(mh.num_entries > 1){
+                        int nleaf = (mh.num_entries/2) -1;
+
+                        while(nleaf >= 0){
+                            bubbleDown(mh,nleaf,mh.num_entries-1);
+                            nleaf--;
+                        }
+                    }
+                }
+
                 void insertMinheap(Minheap& mh,int d){
                     if(mh.num_entries >= mh.size)
                     cout << "The heap is full \n";
@@ -68,14 +79,14 @@ class Minheap{
                         mh.slots[0] = mh.slots[mh.num_entries-1];
                         mh.slots[mh.num_entries-1] = numeric_limits<int>::max(); 
                         mh.num_entries--;
-                        bubbleDown(mh,mh.num_entries-1);
+                        bubbleDown(mh,0,mh.num_entries-1);
                     }
                 }
 
-                void bubbleDown(Minheap& mh,int pos){
+                void bubbleDown(Minheap& mh,int ini,int pos){
                     int l_c = 0;
                     int r_c = 0;
-                    int parent  = 0;
+                    int parent  = ini;
                     bool b = true;
 
                     while(b){
@@ -132,7 +143,7 @@ class Minheap{
                             l--;
 
                             if(l>0)
-                            bubbleDown(mh,l);
+                            bubbleDown(mh,0,l);
                             else b = true;
                         }
                     }
@@ -158,10 +169,25 @@ int main(){
     int x;
     while(i < e){
         cin >> x;
-        h.insertMinheap(h,x);
+        h.slots[i] = x;
+        h.num_entries++;
+        //h.insertMinheap(h,x);
         cout << "\n";
         i++;
     }
+
+    cout << "Your heap before heapifying \n";
+    h.printMinheap(h);
+    cout << "\n";
+
+    h.Heapify(h);
+
+    cout << "Your heap after heapifying \n";
+    h.printMinheap(h);
+    cout << "\n";
+
+
+    /*
     cout << "\n";
     h.printMinheap(h);
     cout << "\n";
@@ -181,7 +207,7 @@ int main(){
     cout <<"Your sorted heap is \n";
     h.printMinheap(h);
 
-
+*/
 
     exit(1);
 }
