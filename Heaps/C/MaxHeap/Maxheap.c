@@ -13,8 +13,11 @@ void printMaxheap(Maxheap *mh);
 void insertMaxheap(Maxheap *mh,int d);
 void bubbleUP(Maxheap *mh,int pos);
 void deleteMAxHeap(Maxheap *mh);
-void bubbleDown(Maxheap *mh,int pos);
+void bubbleDown(Maxheap *mh,int nleaf,int pos);
 void heapSort(Maxheap *mh);
+void heapify(Maxheap *mh);
+
+
 
 void printMaxheap(Maxheap *mh){
     if(mh->num_entries == 0)
@@ -26,6 +29,18 @@ void printMaxheap(Maxheap *mh){
         
         printf("\n");
     }
+}
+
+
+void heapify(Maxheap *mh){
+    if(mh->num_entries > 1){
+        int nleaf = (mh->num_entries/2) - 1;
+        while(nleaf >= 0){
+            bubbleDown(mh,nleaf,mh->num_entries-1);
+            nleaf--;
+        }
+    }
+
 }
 
 void insertMaxheap(Maxheap *mh,int d){
@@ -68,14 +83,14 @@ void deleteMAxHeap(Maxheap *mh){
         mh->slots[0] = mh->slots[mh->num_entries-1];
         mh->slots[mh->num_entries] = INT_MAX;
         mh->num_entries--;
-        bubbleDown(mh,mh->num_entries-1);
+        bubbleDown(mh,0,mh->num_entries-1);
     }
 }
 
-void bubbleDown(Maxheap *mh,int pos){
+void bubbleDown(Maxheap *mh,int nleaf,int pos){
     int l_c = 0;
     int r_c = 0;
-    int parent = 0;
+    int parent = nleaf;
     bool b = true;
 
     while(b){
@@ -132,7 +147,7 @@ void heapSort(Maxheap *mh){
             mh->slots[l] = temp;
             l--;
             if(l > 0)
-            bubbleDown(mh,l);
+            bubbleDown(mh,0,l);
             else b = true;
 
         }
@@ -161,15 +176,23 @@ void main(){
     int e;
     while(i < entries){
         scanf("%d",&e);
-        insertMaxheap(h,e);
+        h->slots[i] = e;
+        h->num_entries++;
+        //insertMaxheap(h,e);
         printf("\n");
         i++;
     }
 
-    printf("Your max heap is \n");
+    printf("Your array is \n");
     printMaxheap(h);
     printf("\n");
 
+    printf("Your heapified array is \n");
+    heapify(h);
+    printMaxheap(h);
+    printf("\b");
+    
+    /*
     printf("Your heap after deleting once is \n");
     deleteMAxHeap(h);
     printMaxheap(h);
@@ -184,4 +207,5 @@ void main(){
     heapSort(h);
     printMaxheap(h);
     printf("\n");
+    */
 }

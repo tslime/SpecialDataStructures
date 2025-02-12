@@ -14,8 +14,9 @@ void printMinheap(Minheap *mh);
 void insertMinheap(Minheap *mh,int d);
 void bubbleUp(Minheap *mh,int pos);
 int deleteMinheap(Minheap *mh);
-void bubbleDown(Minheap *mh,int n_entries);
+void bubbleDown(Minheap *mh,int nleaf,int n_entries);
 void minheapSort(Minheap *mh);
+void heapify(Minheap *mh);
 
 void printMinheap(Minheap *mh){
     if(mh->entries == 0)
@@ -26,6 +27,16 @@ void printMinheap(Minheap *mh){
         printf("%d ",mh->slots[i]);
     }
     printf("\n");
+}
+
+void heapify(Minheap *mh){
+    if(mh->entries > 1){
+        int nleaf = (mh->entries)/2 -1;
+        while(nleaf >= 0){
+            bubbleDown(mh,nleaf,mh->entries);
+            nleaf--;
+        }
+    }
 }
 
 void insertMinheap(Minheap *mh,int d){
@@ -82,16 +93,16 @@ int deleteMinheap(Minheap *mh){
         mh->slots[0] = mh->slots[mh->entries-1];
         mh->slots[mh->entries-1] = INT_MAX;
         mh->entries--;
-        bubbleDown(mh,mh->entries);
+        bubbleDown(mh,0,mh->entries);
     }
    } 
 
     return r;   
 }
 
-void bubbleDown(Minheap *mh,int n_entries){
+void bubbleDown(Minheap *mh,int nleaf,int n_entries){
     
-    int parent = 0;
+    int parent = nleaf;
     bool b = true;
 
     while(b){
@@ -151,7 +162,7 @@ void minheapSort(Minheap *mh){
     mh->slots[0] = mh->slots[k-1];
     mh->slots[k-1] = temp;
     k--;
-    bubbleDown(mh,k);
+    bubbleDown(mh,0,k);
     }
 
 }
@@ -180,10 +191,17 @@ void main(){
         printf("\n");
     }
 
-    printf("Your heap is: \n");
+    printf("Your array is: \n");
     printMinheap(h);
+    printf("\n");
+    
+    printf("Your array after heapifying: \n");
+    heapify(h);
+    printMinheap(h);
+    printf("\n");
 
 
+    /*
     printf("\n");
     deleteMinheap(h);
     printf("Your new heap is :\n");
@@ -201,7 +219,7 @@ void main(){
 
     minheapSort(h);
     printMinheap(h);
-
+*/
 
     
 

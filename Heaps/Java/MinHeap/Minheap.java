@@ -25,6 +25,16 @@ class Minheap{
             }
         }
 
+        public static void heapify(Minheap mh){
+            if(mh.num_entries > 1){
+                int nleaf = (mh.num_entries/2) -1;
+                while(nleaf >= 0){
+                    bubbleDown(mh,nleaf,mh.num_entries-1);
+                    nleaf--;
+                }
+            }
+        }
+
         public static void insertMinheap(Minheap mh,int d){
             if(mh.num_entries >= mh.size)
             System.out.println("The heap is full");
@@ -64,14 +74,14 @@ class Minheap{
                 mh.slots[0] = mh.slots[mh.num_entries-1];
                 mh.slots[mh.num_entries-1] = Integer.MAX_VALUE;
                 mh.num_entries--;
-                bubbleDown(mh,mh.num_entries-1);
+                bubbleDown(mh,0,mh.num_entries-1);
             }
         }
 
-        public static void bubbleDown(Minheap mh,int pos){
+        public static void bubbleDown(Minheap mh,int nleaf,int pos){
             int l_c = 0;
             int r_c = 0;
-            int parent = 0;
+            int parent = nleaf;
             boolean b = true;
 
             while(b){
@@ -128,7 +138,7 @@ class Minheap{
                     mh.slots[l] = temp;
                     l--;
                     if(l > 0)
-                    bubbleDown(mh,l);
+                    bubbleDown(mh,0,l);
                     else b = true;
                 }
             }
@@ -149,14 +159,23 @@ class Minheap{
             int e;
             while(i < entries){
                 e = sc.nextInt();
-                insertMinheap(h,e);
+                h.slots[i] = e;
+                h.num_entries++;
+                //insertMinheap(h,e);
                 System.out.println("");
                 i++;
             }
 
-            System.out.println("Your hear is:");
+            System.out.println("Your array is:");
             printMinheap(h);
             System.out.println("");
+
+            System.out.println("Your array after heapifying is:");
+            heapify(h);
+            printMinheap(h);
+            System.out.println("");
+
+            /*
             System.out.println("Your heap after the first deletion is:");
             deleteMinheap(h);
             printMinheap(h);
@@ -169,6 +188,6 @@ class Minheap{
             System.out.println("Your sorted heap is");
             minheapSort(h);
             printMinheap(h);
-
+            */
         }
 }

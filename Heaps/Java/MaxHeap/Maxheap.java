@@ -25,6 +25,16 @@ class Maxheap{
         }
     } 
 
+    public static void heapify(Maxheap mh){
+        if(mh.num_entries > 1){
+            int nleaf = (mh.num_entries/2)-1;
+            while(nleaf >= 0){
+                bubbleDown(mh,nleaf,mh.num_entries-1);
+                nleaf--;
+            }
+        }
+    }
+
     public static void insertMaxheap(Maxheap mh,int d){
         if(mh.num_entries >= mh.size)
         System.out.println("The heap is full");
@@ -64,14 +74,14 @@ class Maxheap{
             mh.slots[0] = mh.slots[mh.num_entries-1];
             mh.slots[mh.num_entries-1] = Integer.MAX_VALUE;
             mh.num_entries--;
-            bubbleDown(mh,mh.num_entries-1);
+            bubbleDown(mh,0,mh.num_entries-1);
         }
     }
 
-    public static void bubbleDown(Maxheap mh,int pos){
+    public static void bubbleDown(Maxheap mh,int nleaf,int pos){
         int l_c = 0;
         int r_c = 0;
-        int parent = 0;
+        int parent = nleaf;
         boolean b = true;
 
         while(b){
@@ -126,7 +136,7 @@ class Maxheap{
                 l--;
 
                 if(l > 0)
-                bubbleDown(mh,l);
+                bubbleDown(mh,0,l);
                 else b = true;
             }
         }
@@ -155,10 +165,16 @@ class Maxheap{
             i++;
         }
 
-        System.out.println("Your max heap is ");
+        System.out.println("Your array is ");
         printMaxheap(h);
         System.out.println("");
 
+        System.out.println("Your array after heapifying is ");
+        heapify(h);
+        printMaxheap(h);
+        System.out.println("");
+
+        /*
         System.out.println("Your heap after deleting once ");
         deleteMaxheap(h);
         printMaxheap(h);
@@ -173,5 +189,6 @@ class Maxheap{
         maxheapSort(h);
         printMaxheap(h);
         System.out.println("");
+        */
     }   
 }

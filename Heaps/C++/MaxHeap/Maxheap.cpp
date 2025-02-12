@@ -30,6 +30,16 @@ class Maxheap{
                     }
                 }
 
+                void heapify(Maxheap& mh){
+                    if(mh.num_entries > 1){
+                        int nleaf = (mh.num_entries)/2 -1;
+                        while(nleaf >= 0){
+                            bubbleDown(mh,nleaf,mh.num_entries-1);
+                            nleaf--;
+                        }
+                    }
+                }
+
                 void insertMaxheap(Maxheap& mh,int d){
                     if(mh.num_entries >= mh.size)
                     cout << "The heap is full";
@@ -69,14 +79,14 @@ class Maxheap{
                         mh.slots[0] = mh.slots[mh.num_entries-1];
                         mh.slots[mh.num_entries-1] = numeric_limits<int>::max();
                         mh.num_entries--;
-                        bubbleDown(mh,mh.num_entries-1);
+                        bubbleDown(mh,0,mh.num_entries-1);
                     }
                 }
 
-                void bubbleDown(Maxheap& mh,int pos){
+                void bubbleDown(Maxheap& mh,int nleaf,int pos){
                     int l_c = 0;
                     int r_c = 0;
-                    int parent  = 0;
+                    int parent  = nleaf;
                     bool b = true;
 
                     while(b){
@@ -129,7 +139,7 @@ class Maxheap{
                         mh.slots[l] = temp;
                         l--;
                         if(l > 0)
-                        bubbleDown(mh,l);
+                        bubbleDown(mh,0,l);
                         else b = true;
                         }
                    
@@ -153,15 +163,23 @@ int main(){
     int e;
     while(i < entries){
         cin >> e;
-        h.insertMaxheap(h,e);
+        h.slots[i] = e;
+        h.num_entries++;
+        //h.insertMaxheap(h,e);
         i++;
         cout << "\n";
     }
 
-    cout << "Your heap is \n";
+    cout << "Your array is \n";
     h.printMaxheap(h);
     cout << "\n";
 
+    cout << "Your array after heapifying is \n";
+    h.heapify(h);
+    h.printMaxheap(h);
+    cout << "\n";
+
+    /*
     cout << "Your heap after deleting once is \n";
     h.deleteMaxheap(h);
     h.printMaxheap(h);
@@ -176,7 +194,7 @@ int main(){
     h.maxheapSort(h);
     h.printMaxheap(h);
     cout << "\n";
-
+*/
 
 
     exit(1);

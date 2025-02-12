@@ -17,7 +17,15 @@ class Minheap:
             for i in range(self.num_entries):
                 print(self.slots[i],end=" ")
             
-            print("")    
+            print("")
+    
+    def heapify(self):
+        if self.num_entries > 1:
+            nleaf = self.num_entries//2 -1
+            while nleaf >= 0:
+                self.bubbleDown(nleaf,self.num_entries-1)
+                nleaf-=1
+    
 
     def insertMinheap(self,d: int):
         if(self.num_entries >= self.size):
@@ -53,14 +61,14 @@ class Minheap:
             self.slots[0] = self.slots[self.num_entries-1]
             self.slots[self.num_entries-1] = sys.maxsize
             self.num_entries-=1
-            self.bubbleDown(self.num_entries-1)
+            self.bubbleDown(0,self.num_entries-1)
 
 
     
-    def bubbleDown(self,pos: int):
+    def bubbleDown(self,nleaf:int,pos: int):
         l_c = 0
         r_c = 0
-        parent = 0
+        parent = nleaf
         b = True
 
         while b:
@@ -112,7 +120,7 @@ class Minheap:
                 self.slots[l] = temp
                 l-=1
                 if l > 0:
-                    self.bubbleDown(l)
+                    self.bubbleDown(0,l)
                 else:
                     b = True
 
@@ -132,14 +140,22 @@ i = 0
 print("Give me your entries \n")
 while i < e:
     d = int(input())
-    h.insertMinheap(d)
+    h.slots[i] = d
+    h.num_entries+=1
+    """*h.insertMinheap(d)"""
     i+=1
     print()
 
-print("Your heap is \n")
+print("Your array is \n")
 h.printMinheap()
 print()
 
+print("Your array after heapifying is \n")
+h.heapify()
+h.printMinheap()
+print()
+
+"""
 print("Your heap before deletion once \n")
 h.deleteMinheap()
 h.printMinheap()
@@ -153,5 +169,5 @@ print()
 print("Your heap after sorting \n")
 h.minheapSort()
 h.printMinheap()
-
+"""
 print()
