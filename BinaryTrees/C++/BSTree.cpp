@@ -51,7 +51,42 @@ class BSTree{
                 }
 
                 void deleteBSTree(BNode<T> **r,T d){
-                    
+                  if(*r != nullptr){
+
+                    if((*r)->data == d){
+
+                         if((*r)->right == nullptr)
+                         *r = (*r)->left;
+                         else{
+                              if((*r)->left == nullptr)
+                              (*r) = (*r)->right;
+                              else{
+                                   BNode<T> *prev = nullptr;
+                                   BNode<T> *aux = (*r)->right;
+
+                                   while(aux->left != nullptr){
+                                        prev = aux;
+                                        aux = aux->left;
+                                   }
+                                   
+                                   
+                                   (*r)->data = aux->data;
+
+                                   if(prev == nullptr)
+                                   (*r)->right = aux->right;
+                                   else prev->left = aux->right;
+     
+                              }     
+                         }
+
+                    }else{
+                         if((*r)->data < d)
+                         deleteBSTree(&((*r)->left),d);
+                         else deleteBSTree(&((*r)->right),d);
+                    }
+
+
+                  }  
                 }
 
 
