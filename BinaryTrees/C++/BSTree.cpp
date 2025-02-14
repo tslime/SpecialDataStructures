@@ -52,11 +52,10 @@ class BSTree{
 
                 void deleteBSTree(BNode<T> **r,T d){
                   if(*r != nullptr){
-
-                    if((*r)->data == d){
-
+                   
+                    if((*r)->data == d){     
                          if((*r)->right == nullptr)
-                         *r = (*r)->left;
+                         *r = (*r)->left; 
                          else{
                               if((*r)->left == nullptr)
                               (*r) = (*r)->right;
@@ -80,7 +79,7 @@ class BSTree{
                          }
 
                     }else{
-                         if((*r)->data < d)
+                         if(d < (*r)->data)
                          deleteBSTree(&((*r)->left),d);
                          else deleteBSTree(&((*r)->right),d);
                     }
@@ -118,18 +117,17 @@ int main(){
 
         int e;
         while(true){
-          cout << "What is the element you are looking for \n";
+          cout << "Give me the element you would like to delete \n";
           cin >> e;
-        
-          BNode<int> *res = t.searchBSTree(t.root,e);
+          t.deleteBSTree(&t.root,e);
           cout << "\n";
-
-          if(res == nullptr)
-          cout << "This element does not exist \n";
-          else cout << "element found and it is: "<< res->data;
+          cout << "Your new tree is \n";
+          t.printBSTree(t.root);
           
           cout << "\n";
         }
+
+
 
 exit(0);
 
