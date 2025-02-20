@@ -26,15 +26,15 @@ class BSTree{
                         }
                    }
 
-                   void insertBSTree(BNode<T> **r, T d){
+                   void insertBSTree(BNode<T>*& r, T d){
 
-                    if(*r == nullptr){
-                        *r = new BNode<T>(d);
+                    if(r == nullptr){
+                        r = new BNode<T>(d);
 
                    }else{
-                        if(d <= (*r)->data)
-                        insertBSTree(&((*r)->left),d);
-                        else insertBSTree(&((*r)->right),d);
+                        if(d <= r->data)
+                        insertBSTree(r->left,d);
+                        else insertBSTree(r->right,d);
                    }
                 }
                 
@@ -50,18 +50,18 @@ class BSTree{
                     
                 }
 
-                void deleteBSTree(BNode<T> **r,T d){
-                  if(*r != nullptr){
+                void deleteBSTree(BNode<T>*& r,T d){
+                  if(r != nullptr){
                    
-                    if((*r)->data == d){     
-                         if((*r)->right == nullptr)
-                         *r = (*r)->left; 
+                    if(r->data == d){     
+                         if(r->right == nullptr)
+                         r = r->left; 
                          else{
-                              if((*r)->left == nullptr)
-                              (*r) = (*r)->right;
+                              if(r->left == nullptr)
+                              r = r->right;
                               else{
                                    BNode<T> *prev = nullptr;
-                                   BNode<T> *aux = (*r)->right;
+                                   BNode<T> *aux = r->right;
 
                                    while(aux->left != nullptr){
                                         prev = aux;
@@ -69,19 +69,19 @@ class BSTree{
                                    }
                                    
                                    
-                                   (*r)->data = aux->data;
+                                   r->data = aux->data;
 
                                    if(prev == nullptr)
-                                   (*r)->right = aux->right;
+                                   r->right = aux->right;
                                    else prev->left = aux->right;
      
                               }     
                          }
 
                     }else{
-                         if(d < (*r)->data)
-                         deleteBSTree(&((*r)->left),d);
-                         else deleteBSTree(&((*r)->right),d);
+                         if(d < r->data)
+                         deleteBSTree(r->left,d);
+                         else deleteBSTree(r->right,d);
                     }
 
 
@@ -107,7 +107,7 @@ int main(){
         while(i < N){
             cout << "Give me entry number: " << i+1 << " \n";
             cin >> entry;
-            t.insertBSTree(&t.root,entry);
+            t.insertBSTree(t.root,entry);
             i++;
         }
         cout << "\n";
@@ -115,11 +115,12 @@ int main(){
         t.printBSTree(t.root);
         cout << "\n";
 
+      
         int e;
         while(true){
           cout << "Give me the element you would like to delete \n";
           cin >> e;
-          t.deleteBSTree(&t.root,e);
+          t.deleteBSTree(t.root,e);
           cout << "\n";
           cout << "Your new tree is \n";
           t.printBSTree(t.root);
