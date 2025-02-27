@@ -1,5 +1,6 @@
 #include "Vertex.h"
 #include "Edge.h"
+#include "PQueue.h"
 
 #include<iostream>
 #include<malloc.h>
@@ -80,7 +81,31 @@ class Graph{
               }
 
                void deleteEdge(Graph<T1,T2,T3> gr,T1 id1, T2 id2){
+                if(gr.e[id1].v == nullptr || gr.e[id2].v == nullptr)
+                cout << "either Vertex" << id1 << " or Vertex " << id2 << " does not exist \n";
+                else{
+                  Vertex<T1,T2,T3> *aux = gr.e[id1].v->next;
+                  Vertex<T1,T2,T3> *prev = nullptr;
+                  bool b = false;
 
+                  while(aux !=nullptr && !b){
+                    if(aux.id == id2)
+                    b = true;
+                    else{
+                      prev = aux;
+                      aux = aux->next;
+                    }
+                  }
+
+                  if(!b)
+                  cout << "There is no connection between vertex " << id1 << " and Vertex " << id2 << " \n";
+                  else{
+                    if(prev == nullptr)
+                    gr.e[id1].v->next = gr.e[id1].v->next->next;
+                    else prev->next = aux->next;
+                  } 
+
+                }
               }
 
 };
@@ -89,6 +114,9 @@ class Graph{
 int main(){
 
     cout << "test\n";
+    int N;
+
+    Graph<int,string,string> g(N);
 
     exit(1);
 }

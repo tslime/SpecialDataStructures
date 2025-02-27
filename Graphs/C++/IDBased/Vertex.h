@@ -1,14 +1,10 @@
 #ifndef VERTEX_H
 #define VERTEX_H
 
-#include<iostream>
-#include<stdlib.h>
-
 
 
 
 template <typename T1,typename T2,typename T3>
-
 class Vertex{
 
         public:
