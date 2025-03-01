@@ -12,7 +12,7 @@ class Edge{
         
         public:
 
-              Vertex<T1,T2,T3> v;
+              Vertex<T1,T2,T3> *v;
 
               Edge():v(nullptr){}
 
