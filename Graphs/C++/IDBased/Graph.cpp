@@ -34,16 +34,17 @@ class Graph{
                    for(int i = 0;i<gr.size;i++){
                     if(gr.e[i].v != nullptr)
                     {
-                      cout << "This is vertex: " << gr.e[i].v->label << " \n";
-                      Vertex<T1,T2,T3> *aux = gr.e[i].v;
-                      if(aux->next == nullptr)
-                      cout << "This vertex has no connections \n \n";
+                      cout << "This is vertex " << gr.e[i].v->label;
+                      Vertex<T1,T2,T3> *aux = gr.e[i].v->next;
+                      if(aux == nullptr)
+                      cout << " \n This vertex has no connections \n \n";
                       else{
-                        cout << "This vertex" << aux->label << " which has the following connections: \n";
+                        cout << " which has the following connections: \n";
                         while(aux != nullptr){
                           cout << "============> " << aux->label << "\n";
                           aux = aux->next;
                         }
+                        cout << "\n";
                       }
                     }
                    }    
@@ -62,25 +63,35 @@ class Graph{
                 }
               }
 
-              void insertEdge(Graph<T1,T2,T3> gr,T1 id1, T2 id2){
-                    if(gr.e[id1].v == nullptr || gr.e[id2].v == nullptr)
-                    cout << "One of the vertices does not exist \n";
+              void insertEdge(Graph<T1,T2,T3> gr,T1 id1, T1 id2){
+                    if(id1 >= gr.num_vertices || id2 >= gr.num_vertices || id1 < 0 || id2 < 0 || gr.e[id1].v == nullptr || gr.e[id2].v == nullptr || id1 == id2)
+                    cout << "One of the vertices does not exist or you are inputting the same vertex id\n";
                     else{
-                      Vertex<T1,T2,T3> *aux = gr.ed[id1].v;
-                      while(aux->next != nullptr)
-                      aux = aux->next;
+                      Vertex<T1,T2,T3> *aux = gr.e[id1].v;
+                      bool b = false;
 
-                      Vertex<T1,T2,T3> *vx = new Vertex<T1,T2,T3>(gr.ed[2].v.id,gr.ed[2].v.label,gr.ed[2].v.data);
-                      aux->next = vx;
-                      gr.degree++;
+                      while(aux->next != nullptr && !b){
+                        if(aux->next->id == id2)
+                        b = true;
+                        else aux = aux->next;
+                      }
+                      
+                      if(b)
+                      cout << "this connection already exist \n";
+                      else{
+                          Vertex<T1,T2,T3> *vx = new Vertex<T1,T2,T3>(gr.e[id2].v->id,gr.e[id2].v->label,gr.e[id2].v->data);
+                          aux->next = vx;
+                          gr.degree++;
+                      }
                     }
               }
 
-              void deleteVertex(Graph<T1,T2,T3> gr,T1 id){
-                if(gr.e[id].v == nullptr)
+              void deleteVertex(Graph<T1,T2,T3>& gr,T1 id){
+                if(gr.e[id].v == nullptr || id < 0 || id >= gr.num_vertices)
                 cout << "This vertex does not exist";
                 else{
                   for(int i = 0;i<gr.size;i++){
+
                     if(gr.e[i].v != nullptr){
                       Vertex<T1,T2,T3> *aux = gr.e[i].v;
                       Vertex<T1,T2,T3> *prev = nullptr;
@@ -92,17 +103,18 @@ class Graph{
 
                       if(aux != nullptr){
                         if(prev == nullptr)
-                        gr.e[i].v =gr.e[i].v->next;
+                        gr.e[i].v = nullptr;
                         else prev->next = aux->next;
                       }
 
                     }
+
                   }
                 }
               }
 
-               void deleteEdge(Graph<T1,T2,T3> gr,T1 id1, T2 id2){
-                if(gr.e[id1].v == nullptr || gr.e[id2].v == nullptr)
+               void deleteEdge(Graph<T1,T2,T3>& gr,T1 id1, T1 id2){
+                if(id1 < 0 || id2 < 0 || id1 >= gr.num_vertices || id2 >= gr.num_vertices || gr.e[id1].v == nullptr || gr.e[id2].v == nullptr)
                 cout << "either Vertex" << id1 << " or Vertex " << id2 << " does not exist \n";
                 else{
                   Vertex<T1,T2,T3> *aux = gr.e[id1].v->next;
@@ -110,7 +122,7 @@ class Graph{
                   bool b = false;
 
                   while(aux !=nullptr && !b){
-                    if(aux.id == id2)
+                    if(aux->id == id2)
                     b = true;
                     else{
                       prev = aux;
@@ -127,6 +139,11 @@ class Graph{
                   } 
 
                 }
+              }
+
+              Vertex<T1,T2,T3> *dijsktraAlgor(Graph<T1,T2,T3> gr, T1 id){
+
+                return nullptr;
               }
 
 };
@@ -160,9 +177,38 @@ int main(){
       cout << "\n";
     }
 
+
+   bool b = true;
+   int id1,id2;
+   while(b){
+    cout << "Would you like to add an edge 1=(yes)/0(no) \n";
+    cin >> b;
+    if(b){
+     cout << "Give me the ids of your vertices \n";
+     cin >> id1;
+     cin >> id2;
+     g.insertEdge(g,id1,id2);
+     cout << "\n";
+    }
+    cout << "\n";
+
+   }
+
    g.printGraph(g);
 
    cout << "\n";
+   
+   int vd1,vd2;
+   while(true){
+    cout << "give me the id of the vertices that you would like to unlink \n";
+    cin >> vd1;
+    cin >> vd2;
+    g.deleteEdge(g,vd1,vd2);
+    cout << "\n";
+    g.printGraph(g);
+    cout << "\n";
+   }
+   
 
     exit(1);
 }
