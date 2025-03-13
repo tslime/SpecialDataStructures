@@ -9,8 +9,9 @@ class Vertex{
                 T2 id;
                 T3 data;
                 Vertex<T1,T2,T3> *next;
+                int edge_weight;
 
-                Vertex(T1 label,T2 id,T3 data):label(label),id(id),data(data),next(nullptr){}
+                Vertex(T1 label,T2 id,T3 data):label(label),id(id),data(data),edge_weight(0),next(nullptr){}
 };
 
 #endif  

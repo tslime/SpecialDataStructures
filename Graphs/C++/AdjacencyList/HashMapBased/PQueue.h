@@ -65,7 +65,7 @@ class PQueue{
                         if(child-1 < 0)
                         b = false;
                         else{
-                            if(pq.vd[parent]->weight > pq.vd[child]->weight){
+                            if(pq.vd[parent]->edge_weight > pq.vd[child]->edge_weight){
                                 Vertex<T1,T2,T3> *temp = pq.vd[parent];
                                 pq.vd[parent] = pq.vd[child];
                                 pq.vd[child] = temp;
@@ -103,9 +103,9 @@ class PQueue{
                     else{
                         if(r_c < pq.num_v){
                         
-                            if(pq.vd[l_c]->weight <= pq.vd[r_c]->weight){
+                            if(pq.vd[l_c]->edge_weight <= pq.vd[r_c]->edge_weight){
 
-                                if(pq.vd[parent]->weight > pq.vd[l_c]->weight){
+                                if(pq.vd[parent]->edge_weight > pq.vd[l_c]->edge_weight){
                                     Vertex<T1,T2,T3> *temp = pq.vd[parent];
                                     pq.vd[parent] = pq.vd[l_c];
                                     pq.vd[l_c] = temp;
@@ -114,7 +114,7 @@ class PQueue{
 
                             }else{
                                 
-                                if(pq.vd[parent]->weight > pq.vd[r_c]->weight){
+                                if(pq.vd[parent]->edge_weight > pq.vd[r_c]->edge_weight){
                                     Vertex<T1,T2,T3> *temp = pq.vd[parent];
                                     pq.vd[parent] = pq.vd[r_c];
                                     pq.vd[r_c] = temp;
@@ -123,7 +123,7 @@ class PQueue{
                             }
 
                         }else{
-                            if(pq.vd[parent]->weight > pq.vd[l_c]->weight){
+                            if(pq.vd[parent]->edge_weight > pq.vd[l_c]->edge_weight){
                                 Vertex<T1,T2,T3> *temp = pq.vd[parent];
                                 pq.vd[parent] = pq.vd[l_c];
                                 pq.vd[l_c] = temp;

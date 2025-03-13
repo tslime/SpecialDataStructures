@@ -6,13 +6,14 @@
 #include<malloc.h>
 #include<stdlib.h>
 #include<vector>
-
+#include<limits>
 
 
 using std::cin;
 using std::cout;
 using std::end;
 using std::vector;
+using std::numeric_limits;
 
 template <typename T1,typename T2,typename T3>
 class Graph{
@@ -63,7 +64,7 @@ class Graph{
                 }
               }
 
-              void insertEdge(Graph<T1,T2,T3> gr,T1 id1, T1 id2){
+              void insertEdge(Graph<T1,T2,T3> gr,T1 id1, T1 id2,int w){
                     if(id1 >= gr.num_vertices || id2 >= gr.num_vertices || id1 < 0 || id2 < 0 || gr.e[id1].v == nullptr || gr.e[id2].v == nullptr || id1 == id2)
                     cout << "One of the vertices does not exist or you are inputting the same vertex id\n";
                     else{
@@ -80,6 +81,7 @@ class Graph{
                       cout << "this connection already exist \n";
                       else{
                           Vertex<T1,T2,T3> *vx = new Vertex<T1,T2,T3>(gr.e[id2].v->id,gr.e[id2].v->label,gr.e[id2].v->data);
+                          vx->weight = w;
                           aux->next = vx;
                           gr.degree++;
                       }
@@ -141,9 +143,45 @@ class Graph{
                 }
               }
 
-              Vertex<T1,T2,T3> *dijsktraAlgor(Graph<T1,T2,T3> gr, T1 id){
+              vector<Vertex<T1,T2,T3>*> dijsktraAlgor(Graph<T1,T2,T3> gr, T1 id){
 
-                return nullptr;
+                vector<Vertex<T1,T2,T3>*> res(gr.num_vertices);
+
+                if(id >= gr.e.size() || gr.e[id].v == nullptr)
+                return res;
+                
+                //initialization
+                PQueue<T1,T2,T3> q(gr.num_vertices);
+                for(int i=0;i<gr.e.size();i++){
+                  if(gr.e[i].v != nullptr){
+                    res[i] = new Vertex<T1,T2,T3>(gr.e[i].v->id,gr.e[i].v->label,gr.e[i].v->data);
+
+                    if(gr.e[i].v->id == id){
+                      res[i]->weight = 0;
+                      q.insert(q,res[i]);
+                    }else res[i]->weight =  numeric_limits<int>::max();
+
+                  }
+                }
+
+                while(q.num_v > 0){
+                  Vertex<T1,T2,T3> *temp = q.pop(q);
+
+                  int total = 0;
+                  Vertex<T1,T2,T3> *aux = gr.e[temp->id].v->next;
+                  while(aux!=nullptr){
+                    total = temp->weight;
+                    total = total + aux->weight;
+
+                    if(total < res[aux->id]->weight){
+                      res[aux->id]->weight = total;
+                      q.insert(q,res[aux->id]);
+                    }
+                    aux = aux->next;
+                  }
+                }
+
+                return res;
               }
 
 };
@@ -179,25 +217,46 @@ int main(){
 
 
    bool b = true;
-   int id1,id2;
+   int id1,id2,w = 0;
    while(b){
     cout << "Would you like to add an edge 1=(yes)/0(no) \n";
     cin >> b;
     if(b){
-     cout << "Give me the ids of your vertices \n";
+     cout << "Give me the ids of your vertices and the edge weight \n";
      cin >> id1;
      cin >> id2;
-     g.insertEdge(g,id1,id2);
+     cin >> w;
+     g.insertEdge(g,id1,id2,w);
      cout << "\n";
     }
     cout << "\n";
 
    }
 
-   g.printGraph(g);
-
    cout << "\n";
+   g.printGraph(g);
+   cout << "\n";
+
+   int vid;
+   while(true){
+    cout << "Give me the id of the vertex for which you would like to calculat the distance to other vertices: \n";
+    cin >> vid;
+    cout << "\n";
+    vector<Vertex<int,string,string>*> r = g.dijsktraAlgor(g,vid);
+
+    if(r[0] == nullptr)
+    cout << "This vertex does not exist \n";
+    else{
+      cout << "The distance from vertex " << g.e[vid].v->label <<" to: \n";
+      for(int i=0;i<r.size();i++){
+        cout << " ===================> " << r[i]->label << " Distance: " << r[i]->weight <<" \n";
+      }
+      cout << "\n";
+    }
+   }
    
+
+   /*
    int vd1,vd2;
    while(true){
     cout << "give me the id of the vertices that you would like to unlink \n";
@@ -208,7 +267,7 @@ int main(){
     g.printGraph(g);
     cout << "\n";
    }
-   
+   */
 
     exit(1);
 }

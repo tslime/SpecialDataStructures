@@ -3,8 +3,8 @@
 #include<stdbool.h>
 
 
-struct Edge;
-struct SNode;
+//struct Edge;
+//struct SNode;
 
 //Hashmap data structure
 typedef struct SHNode{
