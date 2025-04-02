@@ -4,7 +4,6 @@
 #include<stdbool.h>
 #include<string.h>
 
-
 //TrieNode data structure
 typedef struct Trienode{
     bool endofw;
@@ -22,6 +21,10 @@ typedef struct THashtable{
     int num_c;
     TNode *children[];
 }THashtable;
+
+
+
+
 
 
 //Function to initialize a trie node
@@ -165,34 +168,17 @@ void main(){
     initTNode(&root,s);
 
 
-    
-    char *test1 =(char*)(malloc(100*sizeof(char)));
-    char *test2 =(char*)(malloc(100*sizeof(char)));
-    char *test3 =(char*)(malloc(100*sizeof(char)));
-    char *test4 =(char*)(malloc(100*sizeof(char)));
-    
+    //Insertion process
+    while(1){
     printf("Give me a word \n");
-    scanf("%s",test1);
-    insertString(root,test1);
-    printf("\n");
-    printf("Give me another word \n");
-    scanf("%s",test2);
-    insertString(root,test2);
-    printf("\n");
-    printf("Give me one last word \n");
-    scanf("%s",test3);
-    insertString(root,test3);
-    printf("\n");
-    printf("Give me one more last word \n");
-    scanf("%s",test4);
-    insertString(root,test4);
-    //printf("super test\n");
-    
-
+    char *test =(char*)(malloc(100*sizeof(char)));
+    scanf("%s",test);
+    insertString(root,test);
     printf("\n");
     char *c = (char*)malloc(100*sizeof(c));
     printTrie(root,c,0);
-    printf("\n");
+    }
+    
 
    
    
@@ -228,7 +214,28 @@ void main(){
 
 
   
-  
+   /*
+    char *test1 =(char*)(malloc(100*sizeof(char)));
+    char *test2 =(char*)(malloc(100*sizeof(char)));
+    char *test3 =(char*)(malloc(100*sizeof(char)));
+    char *test4 =(char*)(malloc(100*sizeof(char)));
+    
+    printf("Give me a word \n");
+    scanf("%s",test1);
+    insertString(root,test1);
+    printf("\n");
+    printf("Give me another word \n");
+    scanf("%s",test2);
+    insertString(root,test2);
+    printf("\n");
+    printf("Give me one last word \n");
+    scanf("%s",test3);
+    insertString(root,test3);
+    printf("\n");
+    printf("Give me one more last word \n");
+    scanf("%s",test4);
+    insertString(root,test4);
+    */
 
 
 
