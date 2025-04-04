@@ -129,13 +129,20 @@ void insertString(Trienode *root,char *w){
 void printTrie(Trienode *root,char *k,int ct){
 
     if(root->tn->num_c != 0){
-        int i;
-        for(i = 0;i<root->tn->size;i++){
+        int i = 0;
+        int j = 0;
+        bool b = false;
+        while(i < root->tn->size && !b){
             
-            if(root->tn->children[i]->key != NULL){
+            if(j == root->tn->num_c)
+            b = true;
+            else{
+                
+                if(root->tn->children[i]->key != NULL){
                 k[ct] = *(root->tn->children[i]->key);
                 printf("%s",k);
                 printf(" | ");
+                j++;
 
                 Trienode *aux = root->tn->children[i]->child;
                 if(aux != NULL){
@@ -148,6 +155,8 @@ void printTrie(Trienode *root,char *k,int ct){
                      printf("\n \n");
                 }
             }  
+          }
+         i++;
         }
       }
 }
