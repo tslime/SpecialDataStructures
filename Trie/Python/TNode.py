@@ -1,5 +1,5 @@
 class TNode:
 
-    def __init__(self):
-        self.key = None
+    def __init__(self,c):
+        self.key = c
         self.child = None
