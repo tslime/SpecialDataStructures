@@ -6,7 +6,7 @@ class Trie{
     Trienode root;
 
     public Trie(){
-        this.root = new Trienode();
+        this.root = null;
     }
 
     public static Trienode initTrienode(Trienode r,int s){
@@ -15,8 +15,11 @@ class Trie{
         r = new Trienode();
         r.tn = new THashtable(s);
 
-        for(int i=0;i<s;i++)
-        r.tn.slots[i] = new TNode(null);
+        for(int i=0;i<s;i++){
+            //System.out.println("test");
+            r.tn.slots[i] = new TNode(null);
+        }
+        
 
         return r;
         
@@ -35,7 +38,7 @@ class Trie{
         r.tn = t;
     }
 
-    public static void insertString(Trienode r,String w){
+    public static Trienode insertString(Trienode r,String w){
 
         TNode aux = null;
 
@@ -43,29 +46,38 @@ class Trie{
             int index = w.charAt(i) -'a';
 
             if(i == 0){
+
+                if(r == null)
+                r = initTrienode(r,index+1);
+
                 if(index >= r.tn.size)
                 resizeTrienode(r,index+1);
 
-                if(r.tn.slots[index].key == null)
+                if(r.tn.slots[index].key == null){
                 r.tn.slots[index].key = w.charAt(i) + "";
+                r.tn.num_c++;
+                }
 
                 aux = r.tn.slots[index];
             }else{
-                if(aux.child == null){
+                if(aux.child == null)
                     aux.child = initTrienode(aux.child,index+1);
+                    
+               
+                if(index >= aux.child.tn.size)
+                resizeTrienode(aux.child,index+1);
+                
+                if(aux.child.tn.slots[index].key == null){
                     aux.child.tn.slots[index].key = w.charAt(i)+"";
-
-                    aux = aux.child.tn.slots[index];
-                }else{
-                    if(index >= aux.child.tn.size)
-                    resizeTrienode(aux.child,index+1);
-
-                    aux.child.tn.slots[index].key = w.charAt(i)+"";
-                    aux = aux.child.tn.slots[index];    
+                    aux.child.tn.num_c++;
                 }
+                   
+                aux = aux.child.tn.slots[index];    
+             }
 
             }
-        }
+
+        return r;
     }
 
     public static void printTrie(Trienode r,String k,int ct){
@@ -95,19 +107,13 @@ class Trie{
 
         Scanner sc = new Scanner(System.in);
 
-        int init_size;
         Trie t = new Trie();
-
-        System.out.println("Give me the initial size of your trie ");
-        init_size = sc.nextInt();
-
-        t.root = initTrienode(t.root,init_size);
 
         while(true){
             System.out.println("Give me a word ");
             String w = sc.next();
-            insertString(t.root,w);
-            System.out.println("");
+            t.root = insertString(t.root,w);
+            System.out.println(t.root.tn.size);
             printTrie(t.root,"",0);
             System.out.println("");
         }

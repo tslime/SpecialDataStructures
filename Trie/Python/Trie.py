@@ -32,7 +32,68 @@ class Trie:
         
         t.num_c = r.tn.num_c
         r.tn = t
+    
+    def insertString(self,r:Trienode,w):
+        aux = TNode(None)
+        
+        for i in range(len(w)):
+            index = ord(w[i]) - ord('a')
+        
+            if i == 0:
+                if r == None:
+                    r = self.initTrienode(r,index+1)
+                
+                if index >= r.tn.size:
+                    self.resizeTrienode(r,index+1)
+                
+                if r.tn.slots[index].key == None:
+                    r.tn.slots[index].key = w[i]
+                    r.tn.num_c = r.tn.num_c + 1
+                   
+                aux = r.tn.slots[index]   
+            else:
+                if aux.child == None:
+                    aux.child = self.initTrienode(aux.child,index+1)
+                
+                if index >= aux.child.tn.size:
+                    resizeTrienode(aux.child,index+1)
 
+                if aux.child.tn.slots[index].key == None:
+                    aux.child.tn.slots[index].key = w[i]
+                    r.tn.num_c = r.tn.num_c + 1
+
+                aux = aux.child.tn.slots[index]
+
+        return r
+
+
+    def printTrienode(self,r:Trienode,k,ct):
+    
+        if r != None:
+            i = 0
+            j = 0
+            b = False
+           
+            while i < r.tn.size and not(b):
+                if j >= r.tn.num_c:
+                    b = True
+                else:
+                    if r.tn.slots[i].key != None:
+                        j = j + 1
+                        k = k + r.tn.slots[i].key
+                        print(k,end=" | ")
+                        ct = ct + 1
+                        aux = r.tn.slots[i]
+                        self.printTrienode(aux.child,k,ct)
+                        k = k[:-1]
+                        print(k)
+                        ct = ct - 1
+                        
+                        if ct == 0:
+                            print("\n \n")
+                
+                i = i + 1
+                        
 
 
 
@@ -43,15 +104,11 @@ class Trie:
 
 t = Trie()
 
-print("Give me the initial size of your trie \n")
-s = int(input())
-t.root = t.initTrienode(t.root,s)
-t.root.tn.slots[0].key = "k"
-print()
-print("The size ",t.root.tn.size,end="\n")
-print("The numc ",t.root.tn.num_c,end="\n")
-print("A character: ",t.root.tn.slots[0].key,end="\n")
-print()
-t.resizeTrienode(t.root,6)
-print("new size ",t.root.tn.size,end="\n")
-print("check ",t.root.tn.slots[0].key)
+
+while True:
+    print("Give me a word \n")
+    wr = input()
+    t.root = t.insertString(t.root,wr)
+    print(t.root.tn[2].child.tn.size)
+    t.printTrienode(t.root,"",0)
+    print()

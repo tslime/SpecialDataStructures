@@ -72,63 +72,51 @@ void resize(Trienode **nd,int new_size){
 
     
 //Insert word, iterative
-void insertString(Trienode *root,char *w){
+void insertString(Trienode **root,char *w){
     
     TNode *aux;
+    int index;
 
     int i;
     for(i=0;i<strlen(w);i++){
-        int index = w[i] - 'a';   
+        index = w[i] - 'a';   
 
         if(i == 0){
-            if(index >= root->tn->size)
-            resize(&root,index+1);
 
-            if(root->tn->children[index]->key == NULL){
-                root->tn->children[index]->key = &w[i];
-                root->tn->num_c++;
+            if(*root == NULL)
+            initTNode(root,index+1);
+
+            if(index >= (*root)->tn->size)
+            resize(root,index+1);
+
+            if((*root)->tn->children[index]->key == NULL){
+                (*root)->tn->children[index]->key = &w[i];
+                (*root)->tn->num_c++;
             }
             
-            aux = root->tn->children[index];
+            aux = (*root)->tn->children[index];
 
         }else{
             
-            if(aux->child == NULL){
-                initTNode(&(aux->child),index+1);
-                aux->child->tn->children[index]->key = &w[i];
-                aux->child->tn->num_c++;
-
-                aux = aux->child->tn->children[index];
-                
-            }else{
-                
-                if(index >= aux->child->tn->size){
-
-                    resize(&(aux->child),index+1);
-                    aux->child->tn->children[index]->key = &w[i];
-                    aux->child->tn->num_c++;
+            if(aux->child == NULL)
+            initTNode(&(aux->child),index+1);
+                     
+            if(index >= aux->child->tn->size)
+            resize(&(aux->child),index+1);
                     
-                    aux = aux->child->tn->children[index];
-                }else{
-                    
-                    if(aux->child->tn->children[index]->key == NULL){
-                        aux->child->tn->children[index]->key = &w[i]; 
-                        aux->child->tn->num_c++;  
-                    }
-                    
-                    aux = aux->child->tn->children[index];
-                
-                }
-
-              
+            if(aux->child->tn->children[index]->key == NULL){
+                aux->child->tn->children[index]->key = &w[i]; 
+                aux->child->tn->num_c++;  
             }
-        }   
-    }
+                    
+            aux = aux->child->tn->children[index];        
+        }
+     }
 }
 
 void printTrie(Trienode *root,char *k,int ct){
 
-    if(root->tn->num_c != 0){
+    if(root != NULL){
         int i = 0;
         int j = 0;
         bool b = false;
@@ -166,15 +154,10 @@ void printTrie(Trienode *root,char *k,int ct){
 
 void main(){
 
-    int s; 
-    printf("Give me the size of your trie \n");
-    scanf("%d",&s);
-    printf("\n");
-
 
     //initialization
     Trienode *root;
-    initTNode(&root,s);
+    root = NULL;
 
 
     //Insertion process
@@ -182,7 +165,7 @@ void main(){
     printf("Give me a word \n");
     char *test =(char*)(malloc(100*sizeof(char)));
     scanf("%s",test);
-    insertString(root,test);
+    insertString(&root,test);
     printf("\n");
     char *c = (char*)malloc(100*sizeof(c));
     printTrie(root,c,0);
