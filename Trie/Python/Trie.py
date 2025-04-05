@@ -28,7 +28,7 @@ class Trie:
             if i < r.tn.size:
                 t.slots[i] = r.tn.slots[i]
             else:
-                t.slots[i] = None
+                t.slots[i] = TNode(None)
         
         t.num_c = r.tn.num_c
         r.tn = t
@@ -60,7 +60,7 @@ class Trie:
 
                 if aux.child.tn.slots[index].key == None:
                     aux.child.tn.slots[index].key = w[i]
-                    r.tn.num_c = r.tn.num_c + 1
+                    aux.child.tn.num_c = aux.child.tn.num_c + 1
 
                 aux = aux.child.tn.slots[index]
 
@@ -86,7 +86,6 @@ class Trie:
                         aux = r.tn.slots[i]
                         self.printTrienode(aux.child,k,ct)
                         k = k[:-1]
-                        print(k)
                         ct = ct - 1
                         
                         if ct == 0:
@@ -109,6 +108,4 @@ while True:
     print("Give me a word \n")
     wr = input()
     t.root = t.insertString(t.root,wr)
-    print(t.root.tn[2].child.tn.size)
     t.printTrienode(t.root,"",0)
-    print()
